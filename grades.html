@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aurora - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="app.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/scss/style.scss">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/dataStore.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-notification {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+                        Aurora
+                    </h1>
+                </div>
+                <ul class="flex space-x-8">
+                    <li><a href="index.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Dashboard</a></li>
+                    <li><a href="tasks.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Tasks</a></li>
+                    <li><a href="schedule.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Schedule</a></li>
+                    <li><a href="grades.html" class="inline-flex items-center px-3 py-2 rounded-md font-medium text-indigo-600 bg-indigo-50 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Grades</a></li>
+                    <li><a href="reminders.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+                        Reminders
+                        <span id="notification-counter" class="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full animate-notification">1</span>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header> -->
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.815);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 2px solid #eee;
+            box-shadow: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .hidden{
+            display: none !important;
+        }
+        button[x-date="remove"]{
+            box-shadow: none !important;
+        }
+        button[x-date="remove"]:hover{
+            box-shadow: none !important;
+            background-color: #eee !important;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+        }
+        #main-container{
+            transition: all 0.27s ease;
+        }
+        .animate-slope {
+            transform: translateX(-33%);
+        }
+        .animate-slide-in {
+            opacity: 0;
+            animation: 0.33s ease 0s 1 normal forwards running slideInv2 ;
+        }
+
+        @keyframes slideInv2 {
+            from {
+                transform: translateX(200px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #gradeModal{
+            animation: 0.33s ease 0s 1 normal forwards running fadeInv2 ;
+        }
+
+
+        @keyframes fadeInv2 {
+            from {
+                backdrop-filter: blur(0px);
+                opacity: 0;
+            }
+
+            to {
+                backdrop-filter: blur(10px);
+                opacity: 1;
+            }
+        }
+    </style>
+    <main class="py-10 px-6 bg-gray-50" id="main-container">
+        <link rel="stylesheet" href="styles.css">
+        <div class="task-header">
+            <h2 class="text-3xl font-bold mb-4">Grade Overview</h2>
+            <div id="overallMedian" class="text-2xl font-bold text-gray-700 text-center mb-6 border border-gray-200 p-3 rounded-2xl"></div>
+            <button id="openAddCourseModal" class="micro-interaction">
+                <i class="ri-add-line"></i> Add Course
+            </button>
+        </div>
+        <section id="courseList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        </section>
+    </main>
+    <div id="gradeModal" style="backdrop-filter: blur(10px);" class="hidden fixed inset-0 overflow-y-auto h-full w-full z-50">
+        <div class="absolute right-0 bottom-0 top-0 p-5 bg-white animate-slide-in overflow-y-auto" style="width: 33%;">
+            <div class="flex justify-between items-center text-center">
+                <h3 class="text-2xl font-semibold mb-4 text-gray-700" id="editorTitle"></h3>
+                <div id="courseMedian" class="text-lg font-medium text-gray-700 text-center mb-5 border border-gray-200 p-2 rounded-xl"></div>
+            </div>
+            <div class="flex flex-col justify-between"> 
+                <div id="gradeList" class="space-y-4">
+                </div>
+                
+            </div>
+        </div>
+        <button type="button" id="closeModal" class="absolute top-0 left-0 p-5 mt-12 ml-12 bg-white text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition mb-32 border border-gray-200">
+            <i class="ri-arrow-go-back-line"></i>
+        </button>
+        <form style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" id="gradeForm" class="animate-slide-in absolute top-0 left-0 p-5 mt-12 ml-40 w-full max-w-2xl bg-white text-gray-700 font-semibold rounded-md transition mb-32 border border-gray-200">
+            <div class="space-y-2">
+                <input type="number" placeholder="Grade" id="gradeInput" min="0" max="100" class="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required="">
+            </div>
+            <button type="submit" class="w-full py-2 bg-indigo-600 text-white mt-8 font-semibold rounded-md hover:bg-indigo-700 transition">
+                Add Grade
+            </button>
+        </form>
+    </div>
+
+     <div id="addCourseModal" style="backdrop-filter: blur(10px);" class="hidden fixed inset-0 overflow-y-auto h-full w-full z-50">
+        <div class="absolute right-0 bottom-0 top-0 p-5 bg-white animate-slide-in overflow-y-auto" style="width: 33%;">
+            <h3 class="text-2xl font-semibold mb-4 text-gray-700">Add New Course</h3>
+            <form id="addCourseForm" class="space-y-4">
+                <div class="space-y-2">
+                    <label for="courseNameInput" class="block text-sm font-medium text-gray-700">Course Name:</label>
+                    <input type="text" id="courseNameInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+                </div>
+                <button type="submit" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition">
+                    Save Course
+                </button>
+            </form>
+        </div>
+        <button type="button" id="closeAddCourseModal" class="absolute top-0 left-0 p-5 mt-12 ml-12 bg-white text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition mb-32 border border-gray-200">
+            <i class="ri-arrow-go-back-line"></i>
+        </button>
+    </div>
+
+    <script src="/js/grades.js"></script>
+</body>
+</html>

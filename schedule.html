@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="app.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/dataStore.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.1/luxon.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .calendar-day {
+            min-height: 120px;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day:hover:not(.empty) {
+            background-color: #f3f4f6;
+            transform: scale(1.02);
+        }
+
+        .today {
+            border: 2px solid #6366f1;
+            background-color: #eef2ff;
+        }
+
+        .event {
+            padding: 4px 8px;
+            margin: 2px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .event:hover {
+            transform: translateX(2px);
+            box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-priority-high {
+            background-color: #fee2e2;
+            border-left: 3px solid #dc2626;
+        }
+
+        .event-priority-medium {
+            background-color: #fef3c7;
+            border-left: 3px solid #d97706;
+        }
+
+        .event-priority-low {
+            background-color: #ecfdf5;
+            border-left: 3px solid #059669;
+        }
+
+        .animate-slide-in {
+            opacity: 0;
+            animation: 0.33s ease 0s 1 normal forwards running slideInv2 ;
+        }
+
+        @keyframes slideInv2 {
+            from {
+                transform: translateX(200px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .calendar-day-header {
+            @apply 
+        }
+        #main-container{
+            transition: all 0.27s ease;
+        }
+        .animate-slope {
+            transform: translateX(-33%);
+        }
+
+        .events-container {
+            max-height: 80px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        button{
+            box-shadow: none;
+        }
+
+        .events-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .events-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .events-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        #eventDialog{
+            animation: 0.33s ease 0s 1 normal forwards running fadeInv2 ;
+        }
+
+
+        @keyframes fadeInv2 {
+            from {
+                backdrop-filter: blur(0px);
+                opacity: 0;
+            }
+
+            to {
+                backdrop-filter: blur(10px);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <h1
+                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+                        Aurora
+                    </h1>
+                </div>
+                
+                <ul class="flex space-x-8">
+                    <li><a href="index.html"
+                            class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Dashboard</a>
+                    </li>
+                    <li><a href="tasks.html"
+                            class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Tasks</a>
+                    </li>
+                    <li><a href="schedule.html"
+                            class="inline-flex items-center px-3 py-2 rounded-md font-medium text-indigo-600 bg-indigo-50 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Schedule</a>
+                    </li>
+                    <li><a href="grades.html"
+                            class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Grades</a>
+                    </li>
+                    <li><a href="reminders.html"
+                            class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+                            Reminders
+                            <span id="notification-counter"
+                                class="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full animate-notification">1</span>
+                        </a></li>
+                </ul>
+               
+            </div>
+        </nav>
+    </header> -->
+    <div class="flex items-center space-x-4 border border-gray-200 rounded-md fixed bottom-8 left-8 bg-white shadow-lg" style="z-index: 999;">
+        <button id="todayBtn" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors">
+            Today
+        </button>
+        <button id="weekViewBtn" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors">
+            Week
+        </button>
+        <button id="monthViewBtn" class="px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-indigo-100 transition-colors">
+            Month
+        </button>
+    </div>
+    <script src="/js/schedule.js"></script>
+    <div class="rounded-lg p-6" id="main-container">
+        <div class="flex items-center justify-between mb-6">
+            <button id="prevMonth" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <i class="ri-arrow-left-s-line text-2xl text-gray-600"></i>
+            </button>
+            <div class="flex items-center space-x-4">
+                <h2 id="currentMonth" class="text-2xl font-semibold text-gray-800"></h2>
+                <div class="text-sm text-gray-500" id="currentYear"></div>
+            </div>
+            <button id="nextMonth" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <i class="ri-arrow-right-s-line text-2xl text-gray-600"></i>
+            </button>
+        </div>
+
+        <div class="grid grid-cols-7 gap-4" id="calendarGrid">
+        </div>
+    </div>
+    <div id="eventDialog"style="backdrop-filter: blur(10px);z-index: 9999;" class="hidden fixed inset-0 overflow-y-auto h-full w-full z-50">
+        <div class="absolute right-0 bottom-0 top-0 p-5 bg-white animate-slide-in" style="width: 33%;">
+            <div class="mt-3">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">New Event</h3>
+                <form id="eventForm" class="space-y-4">
+                    <div>
+                        <label for="eventTitle" class="block text-sm font-medium text-gray-700">Event Title</label>
+                        <input type="text" id="eventTitle" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label for="eventDate" class="block text-sm font-medium text-gray-700">Date</label>
+                        <input style="border: 2px solid #e0e0e0;" type="date" id="eventDate" required
+                            class="mt-1 block w-full p-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label for="eventTime" class="block text-sm font-medium text-gray-700">Time</label>
+                        <input style="border: 2px solid #e0e0e0;" type="time" id="eventTime" required
+                            class="mt-1 block w-full rounded-md  p-3  border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label for="eventCourse" class="block text-sm font-medium text-gray-700">Course</label>
+                        <select id="eventCourse" required
+                            class="mt-1 block w-full rounded-md p-3 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </select>
+                    </div>
+                    <div>
+                        <label for="eventPriority" class="block text-sm font-medium text-gray-700">Priority</label>
+                        <select id="eventPriority" required
+                            class="mt-1 block w-full rounded-md p-3 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="eventDescription"
+                            class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="eventDescription" rows="3"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="submit"
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            Add Event
+                        </button>
+                    </div>
+                </form>
+                
+            </div>
+            
+        </div>
+        <button style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" type="button" id="cancelEventBtn" class="absolute top-0 left-0 p-5 mt-12 ml-12 bg-white text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition mb-32 border border-gray-300">
+            <i class="ri-arrow-go-back-line"></i>
+        </button>
+    </div>
+
+    <div id="eventDetailsDialog"style="backdrop-filter: blur(1px);z-index: 9999;" class="hidden fixed inset-0 overflow-y-auto h-full w-full z-50" >
+        <div class="absolute right-0 bottom-0 top-0 p-5 bg-white animate-slide-in" style="width: 33%;">
+            <div class="mt-3">
+                <h3 id="detailsTitle" class="text-lg font-medium text-gray-900 mb-2"></h3>
+                <div id="detailsContent" class="space-y-3">
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="ri-calendar-line mr-2"></i>
+                        <span id="detailsDateTime"></span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="ri-book-line mr-2"></i>
+                        <span id="detailsCourse"></span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="ri-flag-line mr-2"></i>
+                        <span id="detailsPriority"></span>
+                    </div>
+                    <p id="detailsDescription" class="text-sm text-gray-600 mt-2"></p>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button id="editEventBtn"
+                        class="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        Edit
+                    </button>
+                    <button id="deleteEventBtn"
+                        class="px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" type="button" id="closeDetailsBtn" class="absolute top-0 left-0 p-5 mt-12 ml-12 bg-white text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition mb-32 border border-gray-300">
+            <i class="ri-arrow-go-back-line"></i>
+        </button>
+    </div>
+
+    <button id="addEventBtn" style="z-index: 999;"
+        class="fixed bottom-8 right-8 w-14 h-14 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors flex items-center justify-center">
+        <i class="ri-add-line text-2xl"></i>
+    </button>
+</body>
+
+</html>

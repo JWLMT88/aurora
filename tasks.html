@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <script src="/js/dataStore.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-notification {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+                        Aurora
+                    </h1>
+                </div>
+                <ul class="flex space-x-8">
+                    <li><a href="index.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500">Dashboard</a></li>
+                    <li><a href="tasks.html" class="inline-flex items-center px-3 py-2 rounded-md font-medium text-indigo-600 bg-indigo-50 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Tasks</a></li>
+                    <li><a href="schedule.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Schedule</a></li>
+                    <li><a href="grades.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Grades</a></li>
+                    <li><a href="reminders.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+                        Reminders
+                        <span id="notification-counter" class="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full animate-notification">1</span>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header> -->
+
+    <main class="glass">
+        <link rel="stylesheet" href="styles.css">
+        <div class="task-header">
+            <h2 class="text-3xl font-bold mb-4">Tasks</h2>
+            <button id="addTaskBtn" class="micro-interaction">
+                <i class="ri-add-line"></i> Add Task
+            </button>
+        </div>
+        <div class="task-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        <ul id="taskList" class="task-list"></ul>
+    </main>
+
+    <div id="taskDialog" class="dialog">
+        <div class="dialog-content neumorphic split-view">
+            <div class="dialog-left">
+                <h3>Add New Task</h3>
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskInput">Task Title:</label>
+                        <input type="text" id="taskInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseSelect">Course:</label>
+                        <select id="courseSelect" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description:</label>
+                        <textarea id="taskDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskMaterials">Required Materials:</label>
+                        <input type="text" id="taskMaterials">
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDueDate">Due Date:</label>
+                        <input type="datetime-local" id="taskDueDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="taskPriority">Priority:</label>
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="dialog-buttons">
+                        <button type="submit" class="micro-interaction">Add Task</button>
+                        <button type="button" id="cancelTaskBtn" class="micro-interaction">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <div class="dialog-right">
+                <h3>Task Preview</h3>
+                <div id="taskPreview" class="task-preview"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/tasks.js"></script>
+</body>
+</html>

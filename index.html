@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/dataStore.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="icons/1024.png">
+    <script src="app.js"></script>
+    <script src="/js/dynamic-navigation.js"></script>
+    <link rel="stylesheet" href="/scss/style.scss">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+</head>
+<body>
+<div class=" min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-red-100 bg-[length:400%_400%] animate-[gradient_15s_ease_infinite]">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <h1 id="headline-header" class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+                        Aurora
+                    </h1>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="ri-sun-line text-gray-600"></i>
+                    </button>
+                </div>
+                <ul class="flex space-x-8">
+                    <li><a href="tasks.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 ">Tasks 
+                        <span id="tasks-counter" class="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full hidden">0</span></a></li>
+                    <li><a href="notes.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Notes</a></li>
+                   
+                    <li><a href="schedule.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Schedule</a></li>
+                    <li><a href="grades.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Grades</a></li>
+                    <li><a href="reminders.html" class="inline-flex items-center px-3 py-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all">
+                        Reminders
+                        <span id="notification-counter" class="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full animate-notification">2</span>
+                    </a></li>
+                </ul>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button id="profile-menu" class="flex items-center space-x-2">
+                            <span id="user-name" class="text-gray-700 font-medium">Loading...</span>
+                            <img src="/media/icon.jpg" alt="Profile" class="h-8 w-8 rounded-full">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen  p-6">
+        <div class="mb-8">
+            <div class="gradient-bg rounded-lg shadow-lg p-8 text-white overflow-hidden relative">
+                <div class="absolute top-0 right-0 w-64 h-64 opacity-10">
+                    <svg class="w-full h-full" viewBox="0 0 24 24" fill="currentColor" style="border: 2px solid #97979775;">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <div class="relative z-10">
+                    <h2 id="welcome-text" class="animate__animated animate__fadeInUp text-3xl font-bold mb-4">
+                        Welcome Back, <span id="header-user-name">...</span>!
+                    </h2>
+                    <div id="summary-stats" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                        <div class="bg-white/20 rounded-lg p-4 animate__animated animate__fadeInUp shadow-sm" style="backdrop-filter: blur(7px);  border: 2px solid #97979775;">
+                            <h4 class="text-sm font-medium">Today's Tasks</h4>
+                            <p id="today-tasks" class="text-2xl font-bold">0</p>
+                        </div>
+                        <div class="bg-white/20 rounded-lg p-4 animate__animated animate__fadeInUp shadow-sm" style="backdrop-filter: blur(7px);  border: 2px solid #97979775;">
+                            <h4 class="text-sm font-medium">Upcoming Events</h4>
+                            <p id="upcoming-events-count" class="text-2xl font-bold">0</p>
+                        </div>
+                        <div class="bg-white/20 rounded-lg p-4 animate__animated animate__fadeInUp shadow-sm" style="backdrop-filter: blur(7px);  border: 2px solid #97979775;">
+                            <h4 class="text-sm font-medium">Average Grade</h4>
+                            <p id="average-grade" class="text-2xl font-bold">--</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg border border-gray-200">
+                <div class="flex justify-between items-center p-4 border-b border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <i class="ri-task-line text-indigo-600"></i>
+                        My Tasks
+                    </h3>
+                    <a href="tasks.html" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">View All</a>
+                </div>
+                <div class="p-4">
+                    <div id="task-list" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg border border-gray-200">
+                <div class="flex justify-between items-center p-4 border-b border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <i class="ri-calendar-event-line mr-2 text-indigo-600"></i>
+                        Upcoming Events
+                    </h3>
+                    <a href="schedule.html" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">View Calendar</a>
+                </div>
+                <div id="upcomingEvents" class="space-y-4">
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg border border-gray-200">
+                <div class="flex justify-between items-center p-4 border-b border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <i class="ri-bar-chart-line mr-2 text-indigo-600"></i>
+                        Grade Overview
+                    </h3>
+                    <a href="grades.html" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Full Report</a>
+                </div>
+                <div id="gradeOverview" class="h-64">
+                </div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200">
+                <div class="flex justify-between items-center p-4 border-b border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <i class="ri-notification-3-line mr-2 text-indigo-600"></i>
+                        Upcoming Reminders
+                    </h3>
+                    <a href="reminders.html" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Manage Reminders</a>
+                </div>
+                <div id="upcomingReminders" class="space-y-4">
+                </div>
+            </div>
+        </div>
+    </main>
+     <div id="quick-add-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Quick Add</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <select id="quick-add-type" class="w-full p-2 border rounded">
+                        <option value="task">Task</option>
+                        <option value="event">Event</option>
+                        <option value="reminder">Reminder</option>
+                    </select>
+                </div>
+                <div id="quick-add-form" class="space-y-4">
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button id="cancel-quick-add" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        Cancel
+                    </button>
+                    <button id="save-quick-add" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 500ms;
+        }
+    </style>
+    <button id="addEventBtn"
+        class="animate__animated animate__fadeInRight fixed bottom-8 right-8 overflow-hidden w-14 h-14 bg-indigo-600 text-white rounded-full shadow-lg transition hover:w-32 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all flex items-center justify-center">
+        <i class="ri-add-line text-2xl"></i>
+        
+    </button>
+    <script src="/js/dashboard.js"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+{
+    "name": "Aurora",
+    "short_name": "Aurora",
+    "description": "Aurora makes it easy to comprehensive manage tasks, notes, schedules, grades, and reminders",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#f0f3f5",
+    "theme_color": "#124FA3FF",
+    "orientation": "any",
+    "icons": [
+      {
+        "src": "icons/72.png",
+        "sizes": "72x72",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icons/96.png",
+        "sizes": "96x96",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icons/128.png",
+        "sizes": "128x128",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icons/144.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icons/152.png",
+        "sizes": "152x152",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icons/196.png",
+        "sizes": "196x196",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icons/256.png",
+        "sizes": "256x256",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icons/512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "screenshots/dashboard.png",
+        "sizes": "1280x720",
+        "type": "image/png",
+        "platform": "wide",
+        "label": "Dashboard of the aurora"
+      },
+      {
+        "src": "screenshots/tasks.png",
+        "sizes": "1280x720",
+        "type": "image/png",
+        "platform": "wide",
+        "label": "Task management in aurora"
+      },
+      {
+        "src": "screenshots/schedule.png",
+        "sizes": "1280x720",
+        "type": "image/png",
+        "platform": "wide",
+        "label": "Schedule view in aurora"
+      }
+    ],
+    "categories": ["education", "productivity"],
+    "lang": "en-US",
+    "dir": "ltr",
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "shortcuts": [
+      {
+        "name": "Add Task",
+        "short_name": "New Task",
+        "description": "Quickly add a new task",
+        "url": "/tasks.html?action=new",
+        "icons": [{ "src": "icons/task-icon-96x96.png", "sizes": "96x96" }]
+      },
+      {
+        "name": "View Schedule",
+        "short_name": "Schedule",
+        "description": "Open the schedule view",
+        "url": "/schedule.html",
+        "icons": [{ "src": "icons/schedule-icon-96x96.png", "sizes": "96x96" }]
+      }
+    ],
+    "share_target": {
+        "action": "/share-target/",
+        "method": "POST",
+        "enctype": "multipart/form-data",
+        "params": {
+        "title": "title",
+        "text": "text",
+        "url": "url",
+        "files": [
+            {
+            "name": "file",
+            "accept": ["image/*", ".pdf"]
+            }
+        ]
+        }
+    },
+    "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+    "scope": "/",
+    "id": "com.aurora-jwlimited.app",
+    "edge_side_panel": {
+      "preferred_width": 400
+    },
+    "handle_links": "preferred",
+    "launch_handler": {
+      "client_mode": ["navigate-existing", "auto"]
+    },
+    "display_override": ["window-controls-overlay"],
+    "protocol_handlers": [
+      {
+        "protocol": "web+aurora",
+        "url": "/protocol-handler?type=%s"
+      }
+    ],
+    "file_handlers": [
+      {
+        "action": "/open-file",
+        "accept": {
+          "application/json": [".aura"]
+        }
+      }
+    ]
+  }

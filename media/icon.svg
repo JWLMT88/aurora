@@ -1,0 +1,37 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Circle with a Soft Gradient -->
+    <defs>
+      <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" style="stop-color:rgb(15, 20, 35);stop-opacity:1" />
+        <stop offset="100%" style="stop-color:rgb(5, 10, 25);stop-opacity:1" />
+      </radialGradient>
+    </defs>
+    <circle cx="100" cy="100" r="95" fill="url(#bgGradient)" />
+  
+    <!-- Aurora Gradient Definition -->
+    <defs>
+      <linearGradient id="auroraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:rgb(90, 200, 255);stop-opacity:1" />
+        <stop offset="50%" style="stop-color:rgb(140, 110, 255);stop-opacity:1" />
+        <stop offset="100%" style="stop-color:rgb(255, 100, 230);stop-opacity:1" />
+      </linearGradient>
+    </defs>
+  
+    <!-- 'A' Monogram with Enhanced Depth -->
+    <!-- Back layer of 'A' for shadow effect -->
+    <path d="M70,150 L100,50 L130,150 Z" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="13" stroke-linecap="round" />
+    
+    <!-- Front layer of 'A' -->
+    <path d="M70,150 L100,50 L130,150 Z" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="10" stroke-linecap="round" />
+  
+  
+    <!-- Aurora Glow Overlay for 3D Effect -->
+    <circle cx="100" cy="100" r="90" fill="url(#auroraGradient)" opacity="0.08" />
+  
+    <!-- Subtle Inner Glow under the 'A' -->
+    <circle cx="100" cy="100" r="75" fill="url(#auroraGradient)" opacity="0.05" />
+  
+    <!-- Outer Ring for Enhanced Definition -->
+    <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+  </svg>
+  

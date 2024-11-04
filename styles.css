@@ -1,0 +1,725 @@
+:root {
+    --primary-color: #161616;
+    --secondary-color: #4cc9f0;
+    --background-color: #f0f3f5;
+    --text-color: #2b2d42;
+    --card-background: #ffffff;
+    --accent-color: #ccdaff;
+    --success-color: #4caf50;
+    --error-color: #f44336;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--card-background);
+    border-radius: 10px;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.dashboard-card {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid #d2d2d2;
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.task-list,
+.event-list,
+.grade-list,
+.reminder-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.task-item,
+.event-item,
+.grade-item,
+.reminder-item {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.task-item:hover,
+.event-item:hover,
+.grade-item:hover,
+.reminder-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.delete-btn {
+    background-color: var(--error-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+.glass-card {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(107 107 107 / 20%);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.animate-notification {
+    animation: pulse 2s infinite;
+}
+
+.calendar th,
+.calendar td {
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    text-align: center;
+}
+
+.calendar th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.calendar .date {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.calendar .events {
+    min-height: 100px;
+}
+
+#gradeChart {
+    margin-top: 2rem;
+    max-width: 100%;
+    height: 400px;
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    nav ul {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Glassmorphism effect */
+.glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Neumorphism effect */
+.neumorphic {
+    background: var(--background-color);
+    border-radius: 10px;
+}
+
+/* Progress bar animation */
+@keyframes progressAnimation {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    animation: progressAnimation 1s ease-in-out;
+}
+
+/* Micro-interactions */
+.micro-interaction {
+    transition: all 0.3s ease;
+}
+
+.micro-interaction:hover {
+    transform: scale(1.0);
+}
+
+.welcome-container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 2rem;
+}
+
+.dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog-content {
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    height: 80%;
+    overflow: auto;
+    max-width: 1200px;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.task-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.task-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.task-details {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.task-course {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.task-description {
+    margin: 0.25rem 0;
+}
+
+.task-materials {
+    font-style: italic;
+}
+
+#addTaskBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#addTaskBtn i {
+    font-size: 1.2rem;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+}
+
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+}
+
+@media (max-width: 768px) {
+    .dialog-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+}
+
+.welcome-container {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 2rem;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.course-btn {
+    background-color: var(--card-background);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.course-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.selected-courses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.selected-course {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.remove-course {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.input-group input {
+    flex-grow: 1;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.task-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.task-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.task-item {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.task-item:hover {
+    box-shadow: 1px 3px 20px 7px rgb(165 165 165 / 10%);
+}
+
+.task-item.completed {
+    opacity: 0.6;
+}
+
+.task-item .task-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.task-item .task-header label {
+    flex-grow: 1;
+    font-weight: bold;
+}
+
+.task-priority {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    text-transform: capitalize;
+}
+
+.task-priority.low {
+    background-color: #4caf50;
+    color: white;
+}
+
+.task-priority.medium {
+    background-color: #ff9800;
+    color: white;
+}
+
+.task-priority.high {
+    background-color: #f44336;
+    color: white;
+}
+
+.task-details {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.task-course {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.task-description {
+    margin: 0.25rem 0;
+}
+
+.task-materials, .task-due-date {
+    font-style: italic;
+}
+
+.task-actions {
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.edit-btn, .delete-btn {
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dialog-content.split-view {
+    display: flex;
+    gap: 2rem;
+}
+
+.dialog-left, .dialog-right {
+    flex: 1;
+}
+
+.task-preview {
+    background-color: var(--background-color);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .dialog-content.split-view {
+        flex-direction: column;
+    }
+}
+
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* Adjust based on your header height */
+    padding: 1rem;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 5px;
+}
+
+.calendar-day {
+    background-color: var(--card-background);
+    border-radius: 5px;
+    padding: 0.5rem;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-day.empty {
+    background-color: transparent;
+}
+
+.calendar-day.today {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    border: 2px solid var(--primary-color);
+}
+
+.day-number {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.events-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.event {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.event-title {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-time {
+    font-size: 0.7rem;
+}
+
+.dialog.flyout {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background-color: var(--background-color);
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.dialog.flyout.open {
+    right: 0;
+}
+
+.dialog.flyout .dialog-content {
+    height: 100%;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+.floating-action-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.floating-action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .calendar-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .calendar-day-header {
+        display: none;
+    }
+
+    .calendar-day {
+        min-height: auto;
+    }
+
+    .dialog.flyout {
+        width: 100%;
+        right: -100%;
+    }
+}
