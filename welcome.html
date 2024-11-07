@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +12,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css" rel="stylesheet">
     <style>
         @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
-        
+
         .progress-bar {
             background: linear-gradient(to right, #3B82F6, #60A5FA);
             transition: width 0.5s ease;
@@ -27,6 +35,7 @@
         }
 
         .step-active {
+            color: #eee !important;
             background: linear-gradient(135deg, #3B82F6, #60A5FA);
         }
 
@@ -54,31 +63,61 @@
             animation: fadeIn 0.3s ease-out;
         }
 
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .animate-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 bg-[length:400%_400%] animate-[gradient_15s_ease_infinite] p-6">
+
+<body
+    class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 bg-[length:400%_400%] animate-[gradient_15s_ease_infinite] p-6">
     <main class="max-w-5xl mx-auto relative">
-        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-12 flex items-center justify-center gap-4 w-full max-w-md">
+        <div
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-12 flex items-center justify-center gap-4 w-full max-w-md">
             <div class="flex items-center w-full">
-                <div class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold text-white step-active">
+                <div
+                    class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold text-white step-active">
                     1
                 </div>
                 <div class="flex-1 h-1 bg-gray-200 mx-2">
                     <div class="progress-bar h-full rounded-full" style="width: 0%"></div>
                 </div>
-                <div class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold bg-gray-200 text-gray-600">
+                <div
+                    class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold bg-gray-200 text-gray-600">
                     2
+                </div>
+                <div class="flex-1 h-1 bg-gray-200 mx-2">
+                    <div class="progress-bar h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <div
+                    class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold bg-gray-200 text-gray-600">
+                    3
                 </div>
             </div>
         </div>
 
         <div class="glass-morphism rounded-3xl p-12 mt-16">
             <div class="text-center mb-12">
-                <h1 class="text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                <h1
+                    class="text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
                     Welcome to Aurora
                 </h1>
                 <p class="text-xl text-gray-600">Begin your academic journey with style</p>
@@ -89,8 +128,7 @@
                         <label for="userName" class="block text-2xl font-semibold text-gray-800 mb-2">
                             What should we call you?
                         </label>
-                        <input type="text" id="userName" required
-                            class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-200 
+                        <input type="text" id="userName" required class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-200 
                                    focus:ring-4 focus:ring-blue-100 focus:border-blue-400 
                                    transition duration-300 ease-in-out placeholder-gray-400"
                             placeholder="Enter your name">
@@ -110,13 +148,10 @@
                             Add a custom course
                         </label>
                         <div class="flex gap-3">
-                            <input type="text" id="customCourse"
-                                class="flex-1 px-6 py-4 text-lg rounded-xl border-2 border-gray-200 
+                            <input type="text" id="customCourse" class="flex-1 px-6 py-4 text-lg rounded-xl border-2 border-gray-200 
                                        focus:ring-4 focus:ring-blue-100 focus:border-blue-400 
-                                       transition duration-300 ease-in-out"
-                                placeholder="Enter course name">
-                            <button type="button" id="addCustomCourse"
-                                class="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 
+                                       transition duration-300 ease-in-out" placeholder="Enter course name">
+                            <button type="button" id="addCustomCourse" class="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 
                                        text-white rounded-xl hover:from-blue-600 hover:to-blue-700 
                                        transition duration-300 ease-in-out transform hover:-translate-y-1 
                                        active:scale-95 font-semibold text-lg flex items-center gap-2">
@@ -132,32 +167,85 @@
                         </div>
                     </div>
                 </div>
+                <div id="step3" class="space-y-8 hidden">
+                    <div class="space-y-4">
+                        <label class="block text-2xl font-semibold text-gray-800 mb-4">
+                            Choose your features:
+                        </label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                            <div class="feature-card cursor-pointer p-6 rounded-xl border-2 border-gray-200 
+                                      hover:border-blue-400 transition-all duration-300 micro-interaction"
+                                data-feature="notes">
+                                <div class="text-center space-y-3">
+                                    <i class="ri-sticky-note-line text-4xl text-gray-600"></i>
+                                    <h3 class="text-lg font-semibold">Notes</h3>
+                                    <p class="text-sm text-gray-600">Capture and organize your study notes</p>
+                                </div>
+                            </div>
+                            <div class="feature-card cursor-pointer p-6 rounded-xl border-2 border-gray-200 
+                                      hover:border-blue-400 transition-all duration-300 micro-interaction"
+                                data-feature="tasks">
+                                <div class="text-center space-y-3">
+                                    <i class="ri-task-line text-4xl text-gray-600"></i>
+                                    <h3 class="text-lg font-semibold">Tasks</h3>
+                                    <p class="text-sm text-gray-600">Track assignments and deadlines</p>
+                                </div>
+                            </div>
+                            <div class="feature-card cursor-pointer p-6 rounded-xl border-2 border-gray-200 
+                                      hover:border-blue-400 transition-all duration-300 micro-interaction"
+                                data-feature="grades">
+                                <div class="text-center space-y-3">
+                                    <i class="ri-medal-line text-4xl text-gray-600"></i>
+                                    <h3 class="text-lg font-semibold">Grades</h3>
+                                    <p class="text-sm text-gray-600">Monitor your academic performance</p>
+                                </div>
+                            </div>
+                            <div class="feature-card cursor-pointer p-6 rounded-xl border-2 border-gray-200 
+                                      hover:border-blue-400 transition-all duration-300 micro-interaction"
+                                data-feature="calendar">
+                                <div class="text-center space-y-3">
+                                    <i class="ri-calendar-line text-4xl text-gray-600"></i>
+                                    <h3 class="text-lg font-semibold">Calendar</h3>
+                                    <p class="text-sm text-gray-600">Schedule and manage your time</p>
+                                </div>
+                            </div>
+                            <div class="feature-card cursor-pointer p-6 rounded-xl border-2 border-gray-200 
+                                      hover:border-blue-400 transition-all duration-300 micro-interaction"
+                                data-feature="reminders">
+                                <div class="text-center space-y-3">
+                                    <i class="ri-alarm-line text-4xl text-gray-600"></i>
+                                    <h3 class="text-lg font-semibold">Reminders</h3>
+                                    <p class="text-sm text-gray-600">Never miss important deadlines</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex justify-between pt-6">
-                    <button type="button" id="prevBtn" 
-                        class="hidden px-8 py-4 bg-gray-100 text-gray-600 rounded-xl 
+                    <button type="button" id="prevBtn" class="hidden px-8 py-4 bg-gray-100 text-gray-600 rounded-xl 
                                hover:bg-gray-200 transition duration-300 ease-in-out 
                                transform hover:-translate-y-1 active:scale-95 font-semibold text-lg">
                         <i class="ri-arrow-left-line mr-2"></i>
                         Back
                     </button>
-                    <button type="button" id="nextBtn"
-                        class="ml-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 
+                    <button type="button" id="nextBtn" class="ml-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 
                                text-white rounded-xl hover:from-blue-600 hover:to-blue-700 
                                transition duration-300 ease-in-out transform hover:-translate-y-1 
                                active:scale-95 font-semibold text-lg flex items-center">
                         Continue
                         <i class="ri-arrow-right-line ml-2"></i>
                     </button>
-                    <button type="submit" id="submitBtn" 
-                        class="hidden ml-auto px-8 py-4 bg-indigo-600 text-white font-semibold 
+                    <button type="submit" id="submitBtn" class="hidden ml-auto px-8 py-4 bg-indigo-600 text-white font-semibold 
                                rounded-xl hover:bg-indigo-700 transition duration-200 micro-interaction">
                         Get Started
                         <i class="ri-rocket-line ml-2"></i>
                     </button>
                 </div>
             </form>
+
         </div>
     </main>
     <script src="js/welcome.js"></script>
 </body>
+
 </html>

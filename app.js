@@ -126,7 +126,7 @@ const requiredElements = [
     },
     {
         type: 'link',
-        attributes: { rel: 'icon', href: 'icons/1024.png' }
+        attributes: { rel: 'icon', href: 'icons/arora.png' }
     },
     {
         type: 'link',
@@ -134,7 +134,7 @@ const requiredElements = [
     },
     {
         type: 'link',
-        attributes: { rel: 'stylesheet', href: '/scss/s.compiled.css' }
+        attributes: { rel: 'stylesheet', href: '/css/extra.css' }
     }
 ];
 
